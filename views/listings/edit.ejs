@@ -1,0 +1,17 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+    
+    <form action="/listings/<%= data.id %>?_method=PUT" method="POST">
+
+        <input type="text" name="title" value="<%= data.title %>" placeholder="Enter new title">
+        <textarea name="description" placeholder="Enter new description" cols="30" rows="10"><%= data.description %></textarea>
+        <input type="text" name="image" value="<%= data.image %>" placeholder="Enter new image url">
+        <input type="number" name="price" value="<%= data.price %>" placeholder="Enter new price">
+        <input type="text" name="location" value="<%= data.location %>" placeholder="Enter new location">
+        <input type="text" name="country" value="<%= data.country %>" placeholder="Enter new country">
+        <button>Submit</button>
+
+    </form>
+
+</body>
