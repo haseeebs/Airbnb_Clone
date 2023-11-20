@@ -31,8 +31,8 @@ app.get("/", (req, res) => {
 
 // Display all listings
 app.get("/listings", async (req, res) => {
-    const allListing = await Listing.find({});
-    res.render("listings/index", { allListing });
+    const allListings = await Listing.find({});
+    res.render("listings/index", { allListings });
 });
 
 // Display form to create a new listing
