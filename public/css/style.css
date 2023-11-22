@@ -1,5 +1,12 @@
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
 }
 
 a {
@@ -27,7 +34,7 @@ a {
 
 .listing-card {
   opacity: 1;
-  transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.12s ease-in-out;
 
   &:hover {
     opacity: 0.8;
@@ -53,6 +60,15 @@ a {
   }
 }
 
+/* New page */
+
+.add-btn {
+  color: white;
+  border: none;
+  background-color: #fe424d;
+}
+
+/* Footer */
 
 footer {
   & .f-info {

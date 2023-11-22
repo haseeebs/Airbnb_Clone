@@ -6,6 +6,7 @@ const Listing = require("./models/listing");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const ExpressError = require("./ExpressError");
 
 // Setting up the view engine and middleware
 app.set("view engine", "ejs");
@@ -59,7 +60,7 @@ app.get("/listings/:id/edit", async (req, res) => {
 app.put("/listings/:id", async (req, res) => {
     const { id } = req.params;
     const newData = await Listing.findByIdAndUpdate(id, req.body, { new: true });
-    console.log(newData);
+    // console.log(newData);
     res.redirect(`/listings/${id}`);
 });
 
@@ -77,6 +78,27 @@ app.delete("/listings/:id", async (req, res) => {
     console.log(deletedListing);
     res.redirect("/listings");
 });
+
+const checkToken =  (req , res , next) => {
+    const {token} = req.query;
+    if (token === "giveAccess") {                  
+        next();
+    }
+    else {
+        throw new ExpressError(401 , "Access Denied...");
+    }
+}
+
+app.get("/api" , checkToken ,  (req ,res) => {
+    abcd = abcd;
+    res.send("DATA processing...");
+})
+
+app.use( (err , req , res , next) => {
+    const {status = 500, message = "Kuch bhi default message likh sakte hain..."} = err;
+    console.log(status , message);
+    res.status(status).send(message);
+})
 
 // Start the server
 app.listen(8080, () => {
