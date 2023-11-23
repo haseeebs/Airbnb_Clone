@@ -6,6 +6,7 @@ body {
 }
 
 .container {
+  margin-top: 20px;
   flex: 1;
 }
 
