@@ -1,28 +1,77 @@
 <% layout("/layouts/boilerplate") %>
 
-<body>
+    <body>
 
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <img src="<%= listing.image %>" class="card-img-top" alt="Listing Image">
-                    <div class="card-body">
-                        <h3 class="card-title" style="font-weight: 600;"><%= listing.title %></h3>
-                        <p class="card-text">
-                            <strong>Description:</strong> <%= listing.description %><br>
-                            <strong>Price:</strong> &#8377; <%= listing.price.toLocaleString("en-IN") %><br>
-                            <strong>Location:</strong> <%= listing.location %><br>
-                            <strong>Country:</strong> <%= listing.country %>
-                        </p>
+        <div class="container mt-3">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card card-listing">
+                        <h3 class="card-title" style="font-weight: 600;">
+                            <%= listing.title %>
+                        </h3>
+                        <img src="<%= listing.image %>" class="card-img-top" alt="Listing Image">
+                        <div class="card-body p-2">
+                            <br>
+                            <p class="card-text">
+                                <strong>Description:</strong>
+                                <%= listing.description %><br>
+                                    <strong>Price:</strong> &#8377; <%= listing.price.toLocaleString("en-IN") %><br>
+                                        <strong>Location:</strong>
+                                        <%= listing.location %><br>
+                                            <strong>Country:</strong>
+                                            <%= listing.country %>
+                            </p>
                             <a href="/listings/<%= listing.id %>/edit" class="btn btn-primary">Edit</a>
-                        <form action="/listings/<%= listing.id %>?_method=DELETE" method="POST">
-                            <button class="btn btn-dark mt-2">Delete this listing</button>
-                        </form>
+                            <form action="/listings/<%= listing.id %>?_method=DELETE" method="POST">
+                                <button class="btn btn-dark mt-2">Delete this listing</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="col-8 offset-2 mb-3">
+                <hr>
+                <h4>Leave a review</h4>
+                <form action="/listings/<%=listing.id%>/reviews" method="post" novalidate class="needs-validation">
 
-</body>
+                    <div class="mb-3">
+                        <label for="rating" class="form-label"></label>
+                        <input class="form-range" min="1" max="5" type="range" name="review[rating]">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comments</label>
+                        <textarea class="form-control" name="review[comment] cols=" 30" rows="5" required
+                            placeholder="Leave a comment here"></textarea>
+                        <div class="invalid-feedback">
+                            Please add some comments for review
+                        </div>
+                    </div>
+
+                    <button class="btn btn-outline-dark">Submit</button>
+
+                </form>
+            </div>
+
+            <div class="col-8 offset-2 mb-3">
+                <br><hr>
+                <div class="row">
+                    <% for (const review of listing.reviews) { %>
+                        <div class="card col-6 p-2 mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Anonymous</h5>
+                                <p class="card-text"><%= review.comment %></p>
+                                <p class="card-text"><%= review.rating %> Stars</p>
+                                
+                                <form action="/listings/<%= listing.id %>/reviews/<%=review.id %>?_method=DELETE" method="post">
+                                    <button class="btn btn-sm btn-dark">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>            
+        </div>
+
+
+    </body>

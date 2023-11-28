@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-  margin-top: 20px;
+  margin-top: 10px;
   flex: 1;
 }
 
@@ -42,7 +42,7 @@ a {
   }
 }
 
-.card {
+.card-listing {
   border: none;
   margin-bottom: 2rem;
 
