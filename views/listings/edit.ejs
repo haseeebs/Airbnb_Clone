@@ -3,25 +3,25 @@
 <body>
     <div class="row">
         <div class="col-8 offset-2">
-            <form action="/listings/<%= data.id %>?_method=PUT" method="POST" class="needs-validation" novalidate>
+            <form action="/listings/<%= listing.id %>?_method=PUT" method="POST" class="needs-validation" novalidate>
 
                 <div class="mb-3">
                     <label for="title" class="mt-3 form-label">New Title</label>
-                    <input required class="form-control" type="text" name="listing[title]" value="<%= data.title %>" placeholder="Enter new title">
+                    <input required class="form-control" type="text" name="listing[title]" value="<%= listing.title %>" placeholder="Enter new title">
                     <div class="valid-feedback">Great choice! The new title looks good.</div>
                     <div class="invalid-feedback">Uh-oh! Please provide a new catchy title.</div>
                 </div>
 
                 <div class="mb-3">
                     <label for="description" class="form-label">New Description</label>
-                    <textarea required class="form-control" name="listing[description]" placeholder="Enter new description"><%= data.description %></textarea>
+                    <textarea required class="form-control" name="listing[description]" placeholder="Enter new description"><%= listing.description %></textarea>
                     <div class="valid-feedback">Fantastic! Your new description is detailed and informative.</div>
                     <div class="invalid-feedback">Oops! Your new listing description is required.</div>
                 </div>
 
                 <div class="mb-3">
                     <label for="image" class="form-label">New Image URL</label>
-                    <input required class="form-control" type="text" name="listing[image]" value="<%= data.image %>" placeholder="Enter new image URL">
+                    <input required class="form-control" type="text" name="listing[image]" value="<%= listing.image %>" placeholder="Enter new image URL">
                     <div class="valid-feedback">New image URL looks good!</div>
                     <div class="invalid-feedback">Please provide a valid URL for the new listing image.</div>
                 </div>
@@ -29,13 +29,13 @@
                 <div class="row">
                     <div class="mb-3 col-md-4">
                         <label for="price" class="form-label">New Price (per night)</label>
-                        <input required class="form-control" type="number" name="listing[price]" value="<%= data.price %>" placeholder="Enter new price">
+                        <input required class="form-control" type="number" name="listing[price]" value="<%= listing.price %>" placeholder="Enter new price">
                         <div class="valid-feedback">Awesome! You've set a valid new nightly price.</div>
                         <div class="invalid-feedback">Please enter a valid numeric value for the new nightly price.</div>
                     </div>
                     <div class="mb-3 col-md-8">
                         <label for="country" class="form-label">New Country</label>
-                        <input required class="form-control" type="text" name="listing[country]" value="<%= data.country %>" placeholder="Enter new country">
+                        <input required class="form-control" type="text" name="listing[country]" value="<%= listing.country %>" placeholder="Enter new country">
                         <div class="valid-feedback">New country specified successfully!</div>
                         <div class="invalid-feedback">Please provide the new country for your listing.</div>
                     </div>
@@ -43,7 +43,7 @@
 
                 <div class="mb-3">
                     <label for="location" class="form-label">New Location</label>
-                    <input required class="form-control" type="text" name="listing[location]" value="<%= data.location %>" placeholder="Enter new location">
+                    <input required class="form-control" type="text" name="listing[location]" value="<%= listing.location %>" placeholder="Enter new location">
                     <div class="valid-feedback">New location details received!</div>
                     <div class="invalid-feedback">Please provide the new specific location for your listing.</div>
                 </div>

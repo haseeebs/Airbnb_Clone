@@ -7,6 +7,14 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
 const listingRoutes = require("./routes/listing");
 const reviewRoutes = require("./routes/review");
+const session = require("express-session");
+const flash = require("connect-flash");
+
+const sessionOptions = {
+    secret: "AbeChalnaChuchiye",
+    resave: false,
+    saveUninitialized: true,
+}
 
 // Setting up the view engine and middleware
 app.set("view engine", "ejs");
@@ -15,6 +23,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.engine("ejs", ejsMate);
+app.use(session(sessionOptions));
+app.use(flash());
 
 // Connect to the MongoDB database
 main()
@@ -30,10 +40,16 @@ app.get("/", (req, res) => {
     res.send("working on it....? haseeb: yeah bro");
 });
 
+app.use( (req , res , next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+});
+
 // Use the listing routes
 app.use("/listings", listingRoutes);
 // Use the review routes
-app.use("/listings/:id/reviews" , reviewRoutes);
+app.use("/listings/:id/reviews", reviewRoutes);
 
 // 404 Error Handling
 app.all("*", (req, res, next) => {
