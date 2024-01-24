@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync");
-const Listing = require("../models/listing");
+const Listing = require("../models/listingModel");
 const { listingSchema } = require("../schema");
 const ExpressError = require("../utils/ExpressError");
 
@@ -30,7 +30,6 @@ router.get("/new", (req, res) => {
 // Create a new listing
 router.post("/", validateListing, wrapAsync(async (req, res, next) => {
     const newListing = new Listing(req.body.listing);
-    console.log(newListing);
     await newListing.save();
     req.flash("success" , "New listing created...");
     res.redirect("/listings");
@@ -69,7 +68,6 @@ router.get("/:id", wrapAsync(async (req, res) => {
 router.delete("/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
     const deletedListing = await Listing.findByIdAndDelete(id);
-    console.log(deletedListing);
     req.flash("success" , `${deletedListing.title} listing deleted...`)
     res.redirect("/listings");
 }));

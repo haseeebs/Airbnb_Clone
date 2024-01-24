@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router({mergeParams : true});
 const wrapAsync = require("../utils/wrapAsync");
-const Listing = require("../models/listing");
-const Review = require("../models/review");
+const Listing = require("../models/listingModel");
+const Review = require("../models/reviewModel");
 const { reviewSchema } = require("../schema");
 const ExpressError = require("../utils/ExpressError");
 
@@ -21,7 +21,6 @@ const validateReview = (req, res, next) => {
 router.post("/", validateReview, wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id);
     const newReview = await new Review(req.body.review).save();
-    console.log("newReview - ", newReview);
     listing.reviews.push(newReview);
 
     await listing.save()
