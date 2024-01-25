@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const Listing = require("../models/listing.js")
-const sampleListings = require("./data.js");
+const Listing = require("../models/listingModel.js")
+let sampleListings = require("./data.js");
 
 // Connect to the MongoDB database
 main()
@@ -14,6 +14,9 @@ async function main() {
 
 const initDB = async () => {
     await Listing.deleteMany({});
+    sampleListings = sampleListings.map( listing => ({
+        ...listing, user: '65b238f665c6ac76fcf179a2'
+    }))
     await Listing.insertMany(sampleListings);
     console.log("Data was initialized...");
 }
