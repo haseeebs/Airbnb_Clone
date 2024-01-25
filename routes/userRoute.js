@@ -15,10 +15,15 @@ router.route('/signup')
 
             const newUser = new User({ username, email });
 
-            await User.register(newUser, password);
+            const registeredUser = await User.register(newUser, password);
 
-            req.flash('success', 'Welcome to wanderlust...');
-            res.redirect('/listings');
+            req.login(registeredUser, err => {
+                if (err) return next(err);
+
+                req.flash('success', 'Welcome to wanderlust...');
+                res.redirect('/listings');
+            })
+
         } catch (error) {
             req.flash('error', error.message);
             res.redirect('/signup')
