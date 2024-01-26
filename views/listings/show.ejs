@@ -39,27 +39,29 @@
                 </div>
             </div>
             <div class="col-8 offset-2 mb-3">
-                <hr>
-                <h4>Leave a review</h4>
-                <form action="/listings/<%=listing.id%>/reviews" method="post" novalidate class="needs-validation">
+                <% if(currentUser) { %>
+                    <hr>
+                    <h4>Leave a review</h4>
+                    <form action="/listings/<%=listing.id%>/reviews" method="post" novalidate class="needs-validation">
 
-                    <div class="mb-3">
-                        <label for="rating" class="form-label"></label>
-                        <input class="form-range" min="1" max="5" type="range" name="review[rating]">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="comment" class="form-label">Comments</label>
-                        <textarea class="form-control" name="review[comment] cols=" 30" rows="5" required
-                            placeholder="Leave a comment here"></textarea>
-                        <div class="invalid-feedback">
-                            Please add some comments for review
+                        <div class="mb-3">
+                            <label for="rating" class="form-label"></label>
+                            <input class="form-range" min="1" max="5" type="range" name="review[rating]">
                         </div>
-                    </div>
 
-                    <button class="btn btn-outline-dark">Submit</button>
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Comments</label>
+                            <textarea class="form-control" name="review[comment] cols=" 30" rows="5" required
+                                placeholder="Leave a comment here"></textarea>
+                            <div class="invalid-feedback">
+                                Please add some comments for review
+                            </div>
+                        </div>
 
-                </form>
+                        <button class="btn btn-outline-dark">Submit</button>
+
+                    </form>
+                    <% } %>
             </div>
 
             <div class="col-8 offset-2 mb-3">
@@ -69,7 +71,7 @@
                     <% for (const review of listing.reviews) { %>
                         <div class="card col-6 p-2 mb-3">
                             <div class="card-body">
-                                <h5 class="card-title">Anonymous</h5>
+                                <h5 class="card-title">@<%= review.author.username %></h5>
                                 <p class="card-text">
                                     <%= review.comment %>
                                 </p>

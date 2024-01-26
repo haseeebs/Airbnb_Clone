@@ -47,7 +47,13 @@ router.put("/:id", validateListing, isLoggedIn, isOwner, wrapAsync(async (req, r
 // Display a specific listing
 router.get("/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
-    let listing = await Listing.findById(id).populate("reviews").populate('user', 'username');
+    let listing = await Listing.findById(id)
+        .populate({
+            path: "reviews",
+            populate: { path: 'author' }
+        })
+        .populate('user', 'username');
+        
     if (!listing) {
         req.flash("error", "Listing you requested for does not exist...");
         res.redirect("/listings");
