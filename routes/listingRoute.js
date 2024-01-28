@@ -12,11 +12,14 @@ const {
     deleteListing
 } = require("../controllers/listingController");
 
+const multer = require('multer');
+const { storage } = require("../cloudConfig");
+const upload = multer({ storage });
 
 // Display all listings and Create a new listing
 router.route('/')
     .get(getAllListings)
-    .post(validateListing, isLoggedIn, createListing);
+    .post(isLoggedIn, upload.single('listing[image]'), validateListing, createListing);
 
 
 // Display form to create a new listing

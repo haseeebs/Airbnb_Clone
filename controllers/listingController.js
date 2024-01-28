@@ -40,8 +40,15 @@ module.exports.showListing = wrapAsync(async (req, res) => {
 // Access: Public
 module.exports.createListing = wrapAsync(async (req, res, next) => {
     const newListing = new Listing(req.body.listing);
+    
+    const filename = req.file.filename;
+    const url = req.file.path;
+    
     newListing.user = req.user._id;
+    newListing.image = { filename, url };
+
     await newListing.save();
+    
     req.flash("success", "New listing created...");
     res.redirect("/listings");
 });
