@@ -40,15 +40,15 @@ module.exports.showListing = wrapAsync(async (req, res) => {
 // Access: Public
 module.exports.createListing = wrapAsync(async (req, res, next) => {
     const newListing = new Listing(req.body.listing);
-    
+
     const filename = req.file.filename;
     const url = req.file.path;
-    
+
     newListing.user = req.user._id;
     newListing.image = { filename, url };
 
     await newListing.save();
-    
+
     req.flash("success", "New listing created...");
     res.redirect("/listings");
 });
@@ -59,10 +59,15 @@ module.exports.createListing = wrapAsync(async (req, res, next) => {
 module.exports.renderEditForm = wrapAsync(async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id);
+    
     if (!listing) {
         req.flash("error", "Listing you requested for does not exist...");
     }
-    res.render("listings/edit", { listing });
+
+    let originalUrl = listing.image.url;
+    originalUrl = originalUrl.replace('/upload', '/upload/w_250');
+
+    res.render("listings/edit", { listing, originalUrl });
 });
 
 // Update a listing
@@ -70,7 +75,15 @@ module.exports.renderEditForm = wrapAsync(async (req, res) => {
 // Access: Public
 module.exports.updateListing = wrapAsync(async (req, res) => {
     const { id } = req.params;
-    await Listing.findByIdAndUpdate(id, req.body.listing, { new: true });
+    const listing = await Listing.findByIdAndUpdate(id, req.body.listing, { new: true });
+
+    if (typeof req.file !== 'undefined') {
+        const filename = req.file.filename;
+        const url = req.file.path;
+        listing.image = { filename, url };
+        await listing.save();
+    }
+
     req.flash("success", "Listing updated...");
     res.redirect(`/listings/${id}`);
 });

@@ -29,7 +29,7 @@ router.get("/new", isLoggedIn, renderNewForm);
 // Display a specific listing, update a listing and delete a listing
 router.route('/:id')
     .get(showListing)
-    .put(validateListing, isLoggedIn, isOwner, updateListing)
+    .put(isLoggedIn, isOwner, upload.single('listing[image]'), validateListing, updateListing);
     .delete(isLoggedIn, isOwner, deleteListing);
 
 

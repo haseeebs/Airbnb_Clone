@@ -57,7 +57,7 @@ app.get("/", (req, res) => {
 });
 
 
-app.use( (req , res , next) => {
+app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currentUser = req.user;
@@ -65,7 +65,7 @@ app.use( (req , res , next) => {
 });
 
 
-app.use('/' , userRoutes);
+app.use('/', userRoutes);
 app.use("/listings", listingRoutes);
 app.use("/listings/:id/reviews", reviewRoutes);
 
