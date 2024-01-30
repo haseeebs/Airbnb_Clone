@@ -52,9 +52,9 @@ async function main() {
 }
 
 // Default route
-app.get("/", (req, res) => {
-    res.send("working on it....? haseeb: yeah bro");
-});
+// app.get("/", (req, res) => {
+//     res.send("working on it....? haseeb: yeah bro");
+// });
 
 
 app.use((req, res, next) => {
