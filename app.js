@@ -12,16 +12,32 @@ const reviewRoutes = require("./routes/reviewRoute");
 const userRoutes = require("./routes/userRoute");
 
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/userModel');
 
+const store = MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,
+    crypto: {
+        secret: process.env.SECRET
+    },
+    touchAfter: 24 * 3600
+}).on('error' , () => {
+    console.log('Error in mongo session store ' , err);
+})
+
 const sessionOptions = {
-    secret: "AbeChalnaChuchiye",
+    store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true
+    }
 }
 
 app.set("view engine", "ejs");
@@ -48,7 +64,7 @@ main()
     .catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/miniAirbnb');
+    await mongoose.connect(process.env.MONGO_URI);
 }
 
 // Default route
