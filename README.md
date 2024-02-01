@@ -1,4 +1,4 @@
-# Mini_Airbnb
+Mini Airbnb
 Mini Airbnb is a web application built with Node.js, Express, and MongoDB that allows users to browse and review listings. Users can also manage their profiles and interact with the site's features.
 
 Features
@@ -32,11 +32,11 @@ Set up your environment variables by renaming the .env.example file to .env and 
 
 makefile
 Copy code
-NODE_ENV = development
-PORT = 8080
+CLOUD_NAME = dkzmr7ms3
+CLOUD_API_KEY = 195987158168279
+CLOUD_API_SECRET = k9wOsOtkRkL2rRYLTylAH_6MckQ
 MONGO_URI = your MongoDB URI
-SECRET = 'your-secret-key'
-
+SECRET = AbeChalnaChuchiyeInSecret
 Install dependencies:
 
 bash
@@ -54,6 +54,7 @@ Passport.js
 
 Acknowledgments
 Special thanks to the creators of the used dependencies and technologies.
+
 
 Note
 Make sure to replace [repository-url], your MongoDB URI, and your-secret-key with your actual repository URL, MongoDB URI, and a secret key for session management.
